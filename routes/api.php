@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -16,3 +15,9 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::post('user/login', [AuthController::class, 'login'])->name('api.user.login');
+
+Route::middleware(['verifyUserToken'])->group(function () {
+    Route::get('test', function () {
+        return response()->json(['message' => 'Hello World!']);
+    });
+});

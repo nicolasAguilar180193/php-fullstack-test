@@ -25,7 +25,7 @@ class RegisterCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'dni' => 'required|string|max:45',
+            'dni' => 'required|string|max:45|unique:customers,dni',
             'id_reg' => [
                 'required',
                 'integer',

@@ -40,13 +40,15 @@ class CustomerController extends Controller
         if (!$customers) {
             return response()->json([
                 'success' => false,
-                'error' => 'Customer not found.'
+                'error' => 'Customer does not exist.'
             ], 404);
         }
 
         $response_data = [
             'name' => $customers->name,
             'last_name' => $customers->last_name,
+            'email' => $customers->email,
+            'dni' => $customers->dni,
             'address' => $customers->address,
             'region' => $customers->region->description,
             'commune' => $customers->commune->description
@@ -56,6 +58,24 @@ class CustomerController extends Controller
             'success' => true,
             'data' => $response_data
         ]);
+    }
+
+    public function destroy(String $email)
+    {
+        $customer = Customer::query()->where('email', $email)
+            ->where('status', '!=', StatusValue::REMOVED->value)->first();
+
+        if (!$customer) {
+            return response()->json([
+                'success' => false,
+                'error' => 'Customer does not exist.'
+            ], 404);
+        }
+
+        $customer->status = StatusValue::REMOVED->value;
+        $customer->save();
+
+        return response()->json(['success' => true]);
     }
 
 }

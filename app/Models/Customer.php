@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Customer extends Model
 {
     public $timestamps = false;
 
     protected $table = 'customers';
-    protected $primaryKey = ['dni', 'id_reg', 'id_com'];
+    protected $primaryKey = 'dni';
     public $incrementing = false;
+
 
     protected $fillable = [
         'dni',

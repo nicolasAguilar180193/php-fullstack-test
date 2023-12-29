@@ -28,4 +28,6 @@ Route::middleware(['verifyUserToken'])->group(function () {
     Route::get('customers', [CustomerController::class, 'show'])->name('api.customers.show');
 
     Route::post('customers', [CustomerController::class, 'store'])->name('api.customers.store');
+
+    Route::delete('customers/{email}', [CustomerController::class, 'destroy'])->name('api.customers.destroy');
 });

@@ -44,9 +44,17 @@ class CustomerController extends Controller
             ], 404);
         }
 
+        $response_data = [
+            'name' => $customers->name,
+            'last_name' => $customers->last_name,
+            'address' => $customers->address,
+            'region' => $customers->region->description,
+            'commune' => $customers->commune->description
+        ];
+
         return response()->json([
             'success' => true,
-            'data' => $customers
+            'data' => $response_data
         ]);
     }
 

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Region;
 use App\Models\User;
+use App\Models\Commune;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Region::factory()->count(5)->create();
-
+        Commune::factory()->count(10)->create();
     }
 }

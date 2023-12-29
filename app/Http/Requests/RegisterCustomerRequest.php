@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\RegionCommuneRule;
+use Illuminate\Validation\Rule;
+use App\Values\StatusValue;
 
 class RegisterCustomerRequest extends FormRequest
 {
@@ -24,8 +26,16 @@ class RegisterCustomerRequest extends FormRequest
     {
         return [
             'dni' => 'required|string|max:45',
-            'id_reg' => ['required', 'integer', 'exists:regions,id_reg'],
-            'id_com' => ['required', 'integer', 'exists:communes,id_com',
+            'id_reg' => [
+                'required',
+                'integer',
+                Rule::exists('regions')->where(function ($query) {
+                    return $query->where('status', StatusValue::ACTIVE->value);
+                }),
+            ],
+            'id_com' => [
+                'required',
+                'integer',
                 new RegionCommuneRule($this->id_reg),
             ],
             'email' => 'required|email|max:120|unique:customers,email',

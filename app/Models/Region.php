@@ -18,4 +18,8 @@ class Region extends Model
         'description',
         'status'
     ];
+
+    public function communes() {
+        return $this->hasMany(Commune::class, 'id_reg', 'id_reg');
+    }
 }

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegionController;
+use App\Http\Controllers\CommuneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,8 @@ use App\Http\Controllers\AuthController;
 Route::post('user/login', [AuthController::class, 'login'])->name('api.user.login');
 
 Route::middleware(['verifyUserToken'])->group(function () {
-    Route::get('test', function () {
-        return response()->json(['message' => 'Hello World!']);
-    });
+
+    Route::get('regions', [RegionController::class, 'index'])->name('api.regions.index');
+
+    Route::get('communes', [CommuneController::class, 'index'])->name('api.communes.index');
 });

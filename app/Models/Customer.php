@@ -23,4 +23,12 @@ class Customer extends Model
         'date_reg',
         'status'
     ];
+
+    public function region() {
+        return $this->belongsTo(Region::class, 'id_reg', 'id_reg');
+    }
+
+    public function commune() {
+        return $this->belongsTo(Commune::class, 'id_com', 'id_com');
+    }
 }

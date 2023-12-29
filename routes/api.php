@@ -25,5 +25,7 @@ Route::middleware(['verifyUserToken'])->group(function () {
 
     Route::get('communes', [CommuneController::class, 'index'])->name('api.communes.index');
 
+    Route::get('customers', [CustomerController::class, 'show'])->name('api.customers.show');
+
     Route::post('customers', [CustomerController::class, 'store'])->name('api.customers.store');
 });

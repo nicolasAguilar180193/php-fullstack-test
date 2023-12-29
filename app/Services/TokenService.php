@@ -23,7 +23,7 @@ class TokenService
         return $token;
     }
 
-    public function verificarToken($token, $email)
+    public function verificarToken($token)
     {
         $token = UserToken::where('token', $token)
             ->where('expires_at', '>', now())

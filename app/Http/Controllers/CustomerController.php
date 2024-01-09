@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterCustomerRequest;
 use App\Models\Customer;
 use App\Values\StatusValue;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -62,20 +63,21 @@ class CustomerController extends Controller
 
     public function destroy(String $email)
     {
-        $customer = Customer::query()->where('email', $email)
-            ->where('status', '!=', StatusValue::REMOVED->value)->first();
+        $result = DB::table('customers')
+            ->where('email', $email)
+            ->update(['status' => StatusValue::REMOVED->value]);
 
-        if (!$customer) {
+        if(!$result) {
             return response()->json([
                 'success' => false,
                 'error' => 'Customer does not exist.'
             ], 404);
         }
 
-        $customer->status = StatusValue::REMOVED->value;
-        $customer->save();
-
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            'data' => 'Customer deleted successfully.'
+        ]);
     }
 
 }

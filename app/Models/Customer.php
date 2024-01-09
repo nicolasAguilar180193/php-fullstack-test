@@ -10,7 +10,7 @@ class Customer extends Model
     public $timestamps = false;
 
     protected $table = 'customers';
-    protected $primaryKey = 'dni';
+    protected $primaryKey = ['dni', 'id_reg', 'id_com'];
     public $incrementing = false;
 
 

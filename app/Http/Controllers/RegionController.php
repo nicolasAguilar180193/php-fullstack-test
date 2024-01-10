@@ -21,9 +21,7 @@ class RegionController extends Controller
 
         return response()->json([
             'status' => true,
-            'data' => [
-                'regions' => $regions,
-            ],
+            'data' => $regions,
         ]);
     }
 }

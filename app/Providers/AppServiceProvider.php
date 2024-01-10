@@ -8,6 +8,8 @@ use App\Repository\Customer\CustomerRepository;
 use App\Repository\Customer\ICustomerRepository;
 use App\Repository\Region\IRegionRepository;
 use App\Repository\Region\RegionRepository;
+use App\Repository\Commune\ICommuneRepository;
+use App\Repository\Commune\CommuneRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ICustomerRepository::class, CustomerRepository::class);
         $this->app->bind(IRegionRepository::class, RegionRepository::class);
+        $this->app->bind(ICommuneRepository::class, CommuneRepository::class);
     }
 
     /**

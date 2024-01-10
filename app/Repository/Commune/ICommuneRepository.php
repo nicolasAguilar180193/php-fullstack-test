@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repository\Region;
+namespace App\Repository\Commune;
 
 use Illuminate\Pagination\LengthAwarePaginator;
 
-interface IRegionRepository
+interface ICommuneRepository
 {
 	public function list(): LengthAwarePaginator;
 }

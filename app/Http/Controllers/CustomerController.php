@@ -6,37 +6,33 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RegisterCustomerRequest;
 use App\Models\Customer;
 use App\Values\StatusValue;
-use Illuminate\Support\Facades\DB;
+use App\Repository\Customer\ICustomerRepository;
 
 class CustomerController extends Controller
 {
+    protected $customerRepository;
+
+    public function __construct(ICustomerRepository $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
+
     public function store(RegisterCustomerRequest $request)
     {
-        $customer = Customer::create([
-            'dni' => $request->dni,
-            'id_reg' => $request->id_reg,
-            'id_com' => $request->id_com,
-            'email' => $request->email,
-            'name' => $request->name,
-            'last_name' => $request->last_name,
-            'address' => $request->address,
-            'date_reg' => now(),
-        ]);
+        $customer = $this->customerRepository->create($request->all());
 
-        return response()->json(['data' => $customer]);
+        return response()->json([
+            'success' => true,
+            'data' => $customer
+        ]);
     }
 
     public function show(Request $request)
     {
         $email = $request->query('email');
         $dni = $request->query('dni');
-        $customers = Customer::with('region', 'commune')
-            ->where('status', StatusValue::ACTIVE->value)
-            ->where(function ($query) use ($email, $dni) {
-                $query->where('email', $email)
-                    ->orWhere('dni', $dni);
-            })
-            ->first();
+
+        $customers = $this->customerRepository->findByEmailorDni($email, $dni);
 
         if (!$customers) {
             return response()->json([
@@ -63,9 +59,7 @@ class CustomerController extends Controller
 
     public function destroy(String $email)
     {
-        $result = DB::table('customers')
-            ->where('email', $email)
-            ->update(['status' => StatusValue::REMOVED->value]);
+        $result = $this->customerRepository->logicalDeleteByEmail($email);
 
         if(!$result) {
             return response()->json([

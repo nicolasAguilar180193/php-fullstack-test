@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\TokenService;
+use App\Repository\Customer\CustomerRepository;
+use App\Repository\Customer\ICustomerRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
             $key = config('app.key');
             return new TokenService($key);
         });
+
+        $this->app->bind(ICustomerRepository::class, CustomerRepository::class);
     }
 
     /**

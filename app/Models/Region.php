@@ -28,17 +28,7 @@ class Region extends Model
     public function status(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => $this->statusTransform($value),
+            get: fn (string $value) => statusEnumToString($value),
         );
-    }
-
-    private function statusTransform(string $value) 
-    {
-        return match ($value) {
-            StatusValue::ACTIVE->value => 'Activo',
-            StatusValue::INACTIVE->value => 'Inactivo',
-            StatusValue::REMOVED->value => 'Eliminado',
-            default => 'Activo',
-        };
     }
 }

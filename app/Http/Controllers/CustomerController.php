@@ -59,7 +59,7 @@ class CustomerController extends Controller
 
     public function destroy(String $email)
     {
-        $result = $this->customerRepository->logicalDeleteByEmail($email);
+        $result = $this->customerRepository->delete($email);
 
         if(!$result) {
             return response()->json([

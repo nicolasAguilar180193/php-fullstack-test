@@ -38,7 +38,7 @@ class CustomerRepository implements ICustomerRepository
 		return $customer;
 	}
 
-	public function logicalDeleteByEmail(string $email): bool
+	public function delete(string $email): bool
 	{
 		$result = DB::table('customers')
             ->where('email', $email)

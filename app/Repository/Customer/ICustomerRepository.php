@@ -8,5 +8,5 @@ interface ICustomerRepository
 {
 	public function create(array $data): Customer;
 	public function findByEmailorDni(?string $email, ?string $dni): ?Customer;
-	public function logicalDeleteByEmail(string $email): bool;
+	public function delete(string $email): bool;
 }

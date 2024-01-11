@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Region;
 use App\Repository\Region\IRegionRepository;
+use App\Http\Resources\RegionResource;
 
 class RegionController extends Controller
 {
@@ -17,11 +18,11 @@ class RegionController extends Controller
 
     public function index()
     {
-        $regions = $this->regionRepository->list();
+        $regions = RegionResource::collection($this->regionRepository->list());
 
         return response()->json([
             'status' => true,
-            'data' => $regions,
+            'data' => $regions->response()->getData(true),
         ]);
     }
 }

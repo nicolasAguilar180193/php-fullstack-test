@@ -41,7 +41,7 @@ class CustomerRepository implements ICustomerRepository
 	public function delete(string $email): bool
 	{
 		$result = DB::table('customers')
-            ->where('email', $email)
+            ->whereRaw('email = ?', $email)
             ->update(['status' => StatusValue::REMOVED->value]);
 		
 		return $result? true : false;

@@ -10,6 +10,7 @@ use App\Values\StatusValue;
 class RegionCommuneRule implements ValidationRule
 {
     protected $region_id;
+    
     public function __construct(string $region_id) 
     {
         $this->region_id = $region_id;

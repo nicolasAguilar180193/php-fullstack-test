@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterCustomerRequest;
 use App\Models\Customer;
 use App\Values\StatusValue;
 use App\Repository\Customer\ICustomerRepository;
+use App\Http\Resources\CustomerResource;
 
 class CustomerController extends Controller
 {
@@ -41,19 +42,11 @@ class CustomerController extends Controller
             ], 404);
         }
 
-        $response_data = [
-            'name' => $customers->name,
-            'last_name' => $customers->last_name,
-            'email' => $customers->email,
-            'dni' => $customers->dni,
-            'address' => $customers->address,
-            'region' => $customers->region->description,
-            'commune' => $customers->commune->description
-        ];
+        $response_data = new CustomerResource($customers);
 
         return response()->json([
             'success' => true,
-            'data' => $response_data
+            'data' => $response_data->response()->getData(true),
         ]);
     }
 

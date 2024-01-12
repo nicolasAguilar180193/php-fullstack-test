@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\CommuneResource;
 
-class RegionResource extends JsonResource
+class CommuneResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +15,10 @@ class RegionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id_reg,
+            'id' => $this->id_com,
+            'region' => $this->id_reg,
             'description' => $this->description,
             'status' => $this->status,
-            'communes' => CommuneResource::collection($this->whenLoaded('communes')),
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Commune;
 use App\Repository\Commune\ICommuneRepository;
+use App\Http\Resources\CommuneResource;
 
 class CommuneController extends Controller
 {
@@ -17,11 +18,11 @@ class CommuneController extends Controller
     
     public function index()
     {
-        $communes = $this->communeRepository->list();
+        $communes = CommuneResource::collection($this->communeRepository->list());
 
         return response()->json([
             'status' => true,
-            'data' => $communes,
+            'data' => $communes->response()->getData(true),
         ]);
     }
 }

@@ -1,4 +1,4 @@
-# PHP API TEST
+# <span style="color:#eb4432">PHP API TEST</span>
 
 Este es un proyecto API desarrollado en Laravel 10, en donde se implementan 3 Servicios Restful donde: se pueden registran Customers,
 consultar un Customer por dni, email o ambos y eliminar logicamente Customers del sistema. Ademas cuenta con un servicio de autenticacion y 
@@ -53,4 +53,115 @@ php artisan migrate --seed
 ```bash
 php artisan serve
 ```
+
+## EndPoints
+
+###  <span style="color:#eb4432">POST</span> User Login
+
+```
+http://127.0.0.1:8000/api/user/login
+```
+
+Obtener token de autorizacion para los de mas endpoints. Los seeders generan un usuario Admin por defecto para poder usar sin tener que crear uno.
+
+#### Request Headers
+
+* Accept: application/json
+
+#### Body
+
+```json
+{
+    "name": "Admin",
+    "email": "admin@admin.com",
+    "password": "password"
+}
+```
+
+### <span style="color:#eb4432">GET</span> Get Regions
+
+```
+http://127.0.0.1:8000/api/regions
+```
+Obtener listado de regiones con comunas asociadas para poder asociar a customers.
+
+#### Request Headers
+
+* Accept: application/json
+
+* Authorization: token
+
+
+### <span style="color:#eb4432">GET</span> Get Communes
+
+```
+http://127.0.0.1:8000/api/communes
+```
+Obtener listado de comunas para poder asociar a customers.
+
+#### Request Headers
+
+* Accept: application/json
+
+* Authorization: token
+
+
+### <span style="color:#eb4432">GET</span> Get customer by email or dni
+
+```
+http://127.0.0.1:8000/api/customers?email=pepe@gmail.com&dni=323232
+```
+Se puede buscar por email, por dni o ambos.
+
+#### Request Headers
+
+* Accept: application/json
+
+* Authorization: token
+
+#### Query Params
+
+* email: pepe@gmail.com
+* dni: 323232
+
+### <span style="color:#eb4432">DELETE</span> Customer delete
+
+```
+http://127.0.0.1:8000/api/customers
+```
+
+#### Request Headers
+
+* Accept: application/json
+
+* Authorization: token
+
+
+### <span style="color:#eb4432">POST</span> Create Customer
+
+```
+http://127.0.0.1:8000/api/customers
+```
+
+Crea un customer con los datos proporcionados, son necesarios un id de comuna y de region validos.
+
+#### Request Headers
+
+* Accept: application/json
+
+* Authorization: token
+
+#### Body
+
+```json
+{
+    "dni": "123456789",
+    "id_reg": 4,
+    "id_com": 5,
+    "email": "pepe@gmail.com",
+    "name": "pepe",
+    "last_name": "argento"
+}
+```
+
 
